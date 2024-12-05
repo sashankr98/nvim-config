@@ -1,0 +1,4 @@
+lazy-lock.json
+.DS_Store
+
+lua/plugins/dev.lua
