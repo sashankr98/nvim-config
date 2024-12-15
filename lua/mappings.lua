@@ -54,3 +54,7 @@ vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {})
 vim.keymap.set("n", "<leader><leader>x", ":source %<CR>", {})
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", {})
 vim.keymap.set("v", "<leader>x", ":lua<CR>", {})
+
+-- Quickfix
+vim.keymap.set("n", "<M-j>", ":cnext<CR>", {})
+vim.keymap.set("n", "<M-k>", ":cprev<CR>", {})

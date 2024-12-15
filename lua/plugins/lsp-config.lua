@@ -65,9 +65,7 @@ return {
 
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
             vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-            vim.keymap.set("n", "gr", function()
-                require("telescope.builtin").lsp_references()
-            end, {})
+            vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
             vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
             vim.keymap.set("n", "<M-r>", vim.lsp.buf.rename, {})
             vim.keymap.set("n", "<M-F>", vim.lsp.buf.format, {})
