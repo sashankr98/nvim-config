@@ -41,6 +41,6 @@ return {
         local function lazygit_toggle()
             lazygit:toggle()
         end
-        vim.keymap.set("n", "<leader>s", lazygit_toggle, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>ss", lazygit_toggle, { noremap = true, silent = true })
     end,
 }
