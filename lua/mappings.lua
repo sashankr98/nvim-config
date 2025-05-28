@@ -27,25 +27,6 @@ vim.opt.splitright = true
 vim.keymap.set("n", "<M-CR>", "o<ESC>", {})
 vim.keymap.set("n", "<M-S-CR>", "O<ESC>", {})
 
--- Pair handling
-local handle_pair_inline = function (pair_str)
-    vim.keymap.set("i", pair_str, pair_str.."<ESC><Insert>", {})
-end
-
-local inline_pairs = {
-    "()",
-    "[]",
-    "<>",
-    "\"\"",
-    "''",
-    "``",
-}
-
-for _, pair in pairs(inline_pairs) do
-    handle_pair_inline(pair)
-end
-
-vim.keymap.set("i", "()", "()<ESC><left>a", {})
 vim.keymap.set("i", "{<CR>", "{<CR>}<ESC>O", {})
 
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {})

@@ -14,6 +14,8 @@ return {
                     "ts_ls",
                     "eslint",
                     "jsonls",
+                    "yamlls",
+                    "dockerls",
                 },
             })
         end,
@@ -60,6 +62,19 @@ return {
                 end,
             })
             lspconfig.jsonls.setup({
+                capabilities = capabilities,
+            })
+            lspconfig.yamlls.setup({
+                capabilities = capabilities,
+                settings = {
+                    yaml = {
+                        format = {
+                            enable = true,
+                        }
+                    }
+                }
+            })
+            lspconfig.dockerls.setup({
                 capabilities = capabilities,
             })
 
