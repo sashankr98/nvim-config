@@ -1,6 +1,6 @@
 P = vim.print
 
-RELOAD = function (...)
+RELOAD = function(...)
     return require("plenary.reload").reload_module(...)
 end
 

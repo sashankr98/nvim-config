@@ -1,3 +1,12 @@
+vim.filetype.add({
+    filename = {
+        ["docker-compose.yml"] = "yaml.docker-compose",
+        ["docker-compose.yaml"] = "yaml.docker-compose",
+        ["compose.yml"] = "yaml.docker-compose",
+        ["compose.yaml"] = "yaml.docker-compose",
+    },
+})
+
 return {
     {
         "williamboman/mason.nvim",
@@ -16,6 +25,7 @@ return {
                     "jsonls",
                     "yamlls",
                     "dockerls",
+                    "docker_compose_language_service"
                 },
             })
         end,
@@ -38,52 +48,50 @@ return {
         lazy = false,
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            local lspconfig = require("lspconfig")
 
-            lspconfig.lua_ls.setup({
+            vim.lsp.config('*', {
+                root_markers = { '.git' },
                 capabilities = capabilities,
             })
-            lspconfig.ts_ls.setup({
-                capabilities = capabilities,
+
+            vim.lsp.config('ts_ls', {
                 init_options = {
                     preferences = {
                         importModuleSpecifierPreference = "relative",
                         importModuleSpecifierEnding = "minimal",
                     },
                 },
-            })
-            lspconfig.eslint.setup({
-                capabilities = capabilities,
+                root_markers = { "package.json" },
                 on_attach = function(client, bufnr)
-                    -- Prefer eslint over ts_ls
-                    vim.keymap.set("n", "<M-F>", function()
-                        vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
-                    end, { buffer = true })
+                    client.server_capabilities.documentFormattingProvider = false
                 end,
             })
-            lspconfig.jsonls.setup({
-                capabilities = capabilities,
+
+            vim.lsp.config('eslint', {
+                root_markers = { "package.json" },
+                on_attach = function(client, bufnr)
+                    client.server_capabilities.documentFormattingProvider = true
+                end,
             })
-            lspconfig.yamlls.setup({
-                capabilities = capabilities,
+
+            vim.lsp.config('yamlls', {
                 settings = {
                     yaml = {
                         format = {
                             enable = true,
                         }
                     }
-                }
+                },
+                filetypes = { 'yaml' }
             })
-            lspconfig.dockerls.setup({
-                capabilities = capabilities,
-            })
-
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-            vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-            vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
-            vim.keymap.set("n", "<M-r>", vim.lsp.buf.rename, {})
-            vim.keymap.set("n", "<M-F>", vim.lsp.buf.format, {})
         end,
+        keys = {
+            { "gd",         vim.lsp.buf.definition },
+            { "gi",         vim.lsp.buf.implementation },
+            { "gr",         vim.lsp.buf.references },
+            { "<leader>ca", vim.lsp.buf.code_action,   mode = { "n", "v" } },
+            { "<M-r>",      vim.lsp.buf.rename },
+            { "<M-F>",      vim.lsp.buf.format },
+        }
     },
 }
