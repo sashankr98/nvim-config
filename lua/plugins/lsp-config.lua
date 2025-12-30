@@ -9,42 +9,8 @@ vim.filetype.add({
 
 return {
     {
-        "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup()
-        end,
-    },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "lua_ls",
-                    "ts_ls",
-                    "eslint",
-                    "jsonls",
-                    "yamlls",
-                    "dockerls",
-                    "docker_compose_language_service"
-                },
-            })
-        end,
-    },
-    {
         "neovim/nvim-lspconfig",
-        dependencies = {
-            "nvim-telescope/telescope.nvim",
-            {
-                "folke/lazydev.nvim",
-                ft = "lua", -- only load on lua files
-                opts = {
-                    library = {
-                        -- Load luvit types when the `vim.uv` word is found
-                        { path = "luvit-meta/library", words = { "vim%.uv" } }
-                    }
-                }
-            }
-        },
+        dependencies = { "nvim-telescope/telescope.nvim" },
         lazy = false,
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -52,37 +18,6 @@ return {
             vim.lsp.config('*', {
                 root_markers = { '.git' },
                 capabilities = capabilities,
-            })
-
-            vim.lsp.config('ts_ls', {
-                init_options = {
-                    preferences = {
-                        importModuleSpecifierPreference = "relative",
-                        importModuleSpecifierEnding = "minimal",
-                    },
-                },
-                root_markers = { "package.json" },
-                on_attach = function(client, bufnr)
-                    client.server_capabilities.documentFormattingProvider = false
-                end,
-            })
-
-            vim.lsp.config('eslint', {
-                root_markers = { "package.json" },
-                on_attach = function(client, bufnr)
-                    client.server_capabilities.documentFormattingProvider = true
-                end,
-            })
-
-            vim.lsp.config('yamlls', {
-                settings = {
-                    yaml = {
-                        format = {
-                            enable = true,
-                        }
-                    }
-                },
-                filetypes = { 'yaml' }
             })
         end,
         keys = {
@@ -94,4 +29,33 @@ return {
             { "<M-F>",      vim.lsp.buf.format },
         }
     },
+    {
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+        },
+        opts = {
+            automatic_enable = true,
+            ensure_installed = {
+                "lua_ls",
+                "ts_ls",
+                "eslint",
+                "jsonls",
+                "dockerls",
+                "docker_compose_language_service"
+            }
+        }
+    },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    }
 }
