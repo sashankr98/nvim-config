@@ -1,21 +1,19 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
         build = ':TSUpdate',
-        config = function()
-            local config = require('nvim-treesitter.configs')
-            config.setup({
-                auto_install = true,
-                sync_install = false,
-                highlight = { enable = true },
-                indent = { enable = true }
-            })
-        end
+        opts = {
+            auto_install = true,
+            sync_install = false,
+            highlight = { enable = true },
+            indent = { enable = true }
+        },
     },
     {
         "folke/ts-comments.nvim",
         opts = {},
         event = "VeryLazy",
-        enabled = vim.fn.has("nvim-0.10.0") == 1,
+        enabled = vim.fn.has("nvim-0.11") == 1,
     }
 }
