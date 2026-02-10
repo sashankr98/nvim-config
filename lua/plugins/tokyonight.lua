@@ -6,6 +6,9 @@ return {
         vim.cmd.colorscheme("tokyonight")
     end,
     opts = {
-        style = "night"
+        style = "night",
+        on_colors = function(colors)
+            colors.bg = "#0B0E14"
+        end
     }
 }
