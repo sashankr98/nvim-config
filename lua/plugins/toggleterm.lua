@@ -5,6 +5,7 @@ end
 
 return {
     "akinsho/toggleterm.nvim",
+    enabled = false,
     version = "*",
     opts = {
         size = function(term)
@@ -30,8 +31,8 @@ return {
             hidden = true,
             on_open = function(term)
                 vim.cmd("startinsert!")
-                vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-                vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<Esc>", "<Esc>", { noremap = true, silent = true })
+                -- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+                -- vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<Esc>", "<Esc>", { noremap = true, silent = true })
             end,
             on_close = function()
                 vim.cmd("startinsert!")
