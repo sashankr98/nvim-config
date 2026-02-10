@@ -24,8 +24,8 @@ vim.keymap.set("n", "<leader>v", ":vsplit<CR>", {})
 vim.opt.splitright = true
 
 -- Add lines in normal mode
-vim.keymap.set("n", "<M-CR>", "o<ESC>", {})
-vim.keymap.set("n", "<M-S-CR>", "O<ESC>", {})
+-- vim.keymap.set("n", "<C-CR>", "o<ESC>", {})
+-- vim.keymap.set("n", "<C-S-CR>", "O<ESC>", {})
 
 vim.keymap.set("i", "{<CR>", "{<CR>}<ESC>O", {})
 
